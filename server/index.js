@@ -10,6 +10,7 @@ app.use("/", userRouter);
 async function main () {
     await mongoose.connect(process.env.MONGO_URI);
     app.listen(process.env.PORT);
+    console.log("started");
 }
 
 main();
