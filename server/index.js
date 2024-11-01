@@ -1,11 +1,11 @@
-import express from "express";
+import express, { Router } from "express";
 import mongoose from "mongoose";
 import "dotenv/config";
-import { userRouter } from "./routes/user.js";
+import { apiRouter } from "./routes/routers.js";
 
 const app = express();
 
-app.use("/", userRouter);
+app.use("/api", apiRouter);
 
 async function main () {
     await mongoose.connect(process.env.MONGO_URI);
