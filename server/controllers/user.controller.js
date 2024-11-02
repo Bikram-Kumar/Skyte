@@ -57,28 +57,8 @@ export async function retrieveUser(req , res ){
 
 }
 export async function deleteUser(req , res ){
+    const { id , userName } = req.body;
 
+    
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// http://lh:90/api/user/retrieve?objectId=ygsdchbgnrfg&userName
