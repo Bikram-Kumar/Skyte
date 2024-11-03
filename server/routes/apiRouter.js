@@ -9,7 +9,7 @@ export const apiRouter = Router();
 
 apiRouter.use(express.json());
 
-
+      
 apiRouter.post("/user/create", createUser);
 apiRouter.put("/user/update", updateUser);
 apiRouter.get("/user/retrieve", retrieveUser);
