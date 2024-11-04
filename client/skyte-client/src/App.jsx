@@ -1,4 +1,4 @@
-
+import { useState } from 'react'
 import './App.css'
 import NavBar from './components/NavBar'
 function App() {
@@ -7,6 +7,9 @@ function App() {
   return (
     <>
       <NavBar></NavBar>
+      <p className='text-3xl font-bold underline text-teal-300'>
+        Skyte
+      </p>
     </>
   )
 }
