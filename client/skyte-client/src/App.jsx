@@ -1,17 +1,26 @@
-import { useState } from 'react'
-import './App.css'
-import NavBar from './components/NavBar'
-function App() {
-  const [count, setCount] = useState(0)
+import ReactDOM from "react-dom/client";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-  return (
-    <>
-      <NavBar></NavBar>
-      <p className='text-3xl font-bold underline text-teal-300'>
-        Skyte
-      </p>
-    </>
-  )
+import Messages from "./components/Messages";
+import Communities from "./components/Communities";
+import ContactList from "./components/ContactList";
+import Layout from "./components/Layout";
+import "./App.css";
+export default function App()
+{
+  return <>
+ <BrowserRouter>
+ <Layout>
+
+ </Layout>
+ <Routes>
+  
+  <Route path ='/' element = {<Messages></Messages>}></Route>
+  <Route path = "Communities" element ={<Communities></Communities>}></Route>
+  <Route path ="ContactList" element ={<ContactList></ContactList>}></Route>
+  
+ </Routes>
+ </BrowserRouter>
+
+</>
 }
-
-export default App
