@@ -8,9 +8,9 @@ rootRouter.use(express.json());
       
 
 rootRouter.get("/", function (req, res, next) {
-      const isAuthenticated = req.oidc ? req.oidc.isAuthenticated() : false;
+      console.log(req.oidc);
       res.render('index', {
             title: 'Skyte',
-            isAuthenticated: isAuthenticated
+            isAuthenticated: req.oidc.isAuthenticated()
       });
 });
