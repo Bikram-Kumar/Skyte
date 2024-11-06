@@ -1,5 +1,5 @@
 export default function Communities()
 {
-    return <><h1>Communitioes</h1>
+    return <><h1>Communities</h1>
         </>
 }

@@ -1,6 +1,5 @@
 export default function ContactList()
 {
     return <>
-    <h1>
-        Contact list</h1></>
+    <h1>Contact list</h1></>
 }
