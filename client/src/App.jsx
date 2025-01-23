@@ -1,26 +1,16 @@
-import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import HomePage from "./pages/HomePage";
 
-import Messages from "./components/Messages";
-import Communities from "./components/Communities";
-import ContactList from "./components/ContactList";
-import Layout from "./components/Layout";
-import "./App.css";
 export default function App()
 {
-  return <>
- <BrowserRouter>
- <Layout>
+  return (
+    <>
+      <BrowserRouter>
+        <Routes>
+          <Route path ='/' element = {<HomePage />}></Route>
 
- </Layout>
- <Routes>
-  
-  <Route path ='/' element = {<Messages></Messages>}></Route>
-  <Route path = "Communities" element ={<Communities></Communities>}></Route>
-  <Route path ="ContactList" element ={<ContactList></ContactList>}></Route>
-  
- </Routes>
- </BrowserRouter>
-
-</>
+        </Routes>
+      </BrowserRouter>
+    </>
+  ) 
 }
