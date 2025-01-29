@@ -17,10 +17,10 @@ const messages = [
 export default function Messages()
 {
     return (
-        <div className="flex flex-col basis-1/2 bg-neutral-100">
+        <div className="flex flex-col basis-7/12 bg-neutral-100">
             <div className="w-full bg-sky-400 p-2 border-l">Elon Musk</div>
             <div className="flex flex-col p-2 bg-emerald-300 h-full overflow-auto">
-                {messages.map((message) => <MessageBox message={message}/>)}
+                {messages.map((message, idx) => <MessageBox message={message} key={idx} />)}
             </div>
         </div>
     )

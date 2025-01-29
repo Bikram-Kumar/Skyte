@@ -19,10 +19,10 @@ const users = [
 
 export default function ContactList() {
     return (
-        <div className="flex flex-col basis-1/2 bg-sky-100">
+        <div className="flex flex-col basis-5/12 bg-neutral-300">
             <div className="p-2 bg-sky-400 border-black ring-1">Contacts</div>
             <div className="flex flex-col h-full overflow-auto">
-                {users.map((user) => <Contact userName={user} />)}
+                {users.map((user, idx) => <Contact userName={user} key={idx} />)}
             </div>
         </div>
     );
@@ -30,7 +30,7 @@ export default function ContactList() {
 
 function Contact ({userName}) {
     return (
-        <div className="w-full bg-neutral-50 rounded-md mb-0.5 p-2">
+        <div className="w-full bg-neutral-200 rounded-md mb-0.5 p-2">
             {userName}
         </div>
     );

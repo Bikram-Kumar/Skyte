@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import HomePage from "./pages/HomePage";
+import HomePage from "./pages/homepage";
+import LoginPage from "./pages/LoginPage";
 
 export default function App()
 {
@@ -8,6 +9,7 @@ export default function App()
       <BrowserRouter>
         <Routes>
           <Route path ='/' element = {<HomePage />}></Route>
+          <Route path ='/login' element = {<LoginPage />}></Route>
 
         </Routes>
       </BrowserRouter>
