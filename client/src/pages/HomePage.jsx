@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import axios from 'axios';
 
 export default function HomePage () {
-    const { getAccessTokenSilently, loginWithRedirect, isLoading } = useAuth0();
+    const { getAccessTokenSilently, loginWithRedirect, isLoading, user } = useAuth0();
     
     useEffect(() => {
         (async () => {
@@ -18,13 +18,10 @@ export default function HomePage () {
                 }
                 axios.defaults.headers.common['authorization'] = 'Bearer ' + token;
 
-                console.log(axios.post("http://localhost:3000/api/user/create/", {
-                    name: "Skyte User",
-                    email: "bik@gmail.com",
-                    user_name: "tester",
-                    password: "1234",
-                    avatar: "Skyte User"
+                console.log(await axios.post("http://localhost:3000/api/user/retrieve", {
+                    email: "bikram@gmail.com",
                 }));
+                console.log(user.email);
 
             } catch (err) {
                 if (err.error == "login_required") {

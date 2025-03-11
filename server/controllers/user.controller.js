@@ -2,14 +2,12 @@ import {userModel} from "../models.js";
 
 
 export async function createUser(req, res) {
-    const {email, user_name, name, password , avatar} = req.body;
+    const {email, name, avatar} = req.body;
 
     try {
         await userModel.create({
             email: email,
-            user_name: user_name,
             name: name,
-            password: password ,
             avatar : avatar 
         });
         res.send("User created");
@@ -22,13 +20,11 @@ export async function createUser(req, res) {
 };
 
 export async function updateUser(req , res ){
-    const { _id, email, user_name, name, password, avatar} = req.body; 
+    const {email, name, avatar} = req.body; 
     try {
         await userModel.findByIdAndUpdate(_id, {
             email: email,
-            user_name: user_name,
             name: name,
-            password: password ,
             avatar : avatar 
         }); 
         res.send("updated User"); 
@@ -38,24 +34,23 @@ export async function updateUser(req , res ){
 }
 
 
-// either provide id or userName, not both
 export async function retrieveUser(req , res ){
-    const id = req.query.id;
-    const userName = req.query.userName;
+    const {email} = req.body;
     try{
-        if (id) {
-            res.json(await userModel.findById(id)); 
-        } else if (userName) {
-            res.json(await userModel.find({user_name : userName}));
+        const data = await userModel.findOne({email : email});
+        
+        if (data) {
+            res.status(200).json(data);
         } else {
-            res.send("Provide id or userName");
-        }       
+            res.status(204).json("");               // 204 if user doesn't exist 
+        }
     } catch(error){
         console.log("something went wrong");
     }
-
-
 }
+
+
+
 export async function deleteUser(req , res ){
     const { id , userName } = req.body;
 

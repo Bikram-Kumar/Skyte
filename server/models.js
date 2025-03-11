@@ -5,14 +5,12 @@ const ObjectId = mongoose.ObjectId;
 
 
 const userSchema = new Schema({
-    email : {type: String},                             // same email can have multiple accounts
-    user_name : {type: String, unique: true},
+    email : {type: String},                             // one email one account
     name : {type: String},
-    password : {type: String}, 
     avatar: {type: Buffer}
 });
 
-// each chatroom will contain participant ids (`user_id`)
+// each chatroom will contain participant ids
 const chatroomSchema = new Schema({
     participant_ids : {type: String},                   // comma separeted string of hex `ObjectId`s
     last_message : {type: ObjectId},
