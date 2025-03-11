@@ -14,7 +14,8 @@ export async function createUser(req, res) {
         });
         res.send("User created");
     } catch (error) {
-        console.log("Something went wrong");
+        console.log(error);
+        res.send(error.errmsg);
     }
 
 
@@ -44,7 +45,6 @@ export async function retrieveUser(req , res ){
     try{
         if (id) {
             res.json(await userModel.findById(id)); 
-            
         } else if (userName) {
             res.json(await userModel.find({user_name : userName}));
         } else {
