@@ -12,7 +12,7 @@ apiRouter.use(express.json());
       
 apiRouter.post("/user/create", createUser);
 apiRouter.put("/user/update", updateUser);
-apiRouter.post("/user/retrieve", retrieveUser);
+apiRouter.get("/user/retrieve", retrieveUser);
 apiRouter.delete("/user/delete", deleteUser);
 
 apiRouter.post("/chatroom/create", createChatroom);

@@ -10,10 +10,10 @@ export async function createUser(req, res) {
             name: name,
             avatar : avatar 
         });
-        res.send("User created");
+        res.status(201).send("User created");
     } catch (error) {
         console.log(error);
-        res.send(error.errmsg);
+        res.status(200).send(error.errmsg);
     }
 
 
@@ -35,7 +35,7 @@ export async function updateUser(req , res ){
 
 
 export async function retrieveUser(req , res ){
-    const {email} = req.body;
+    const email = req.query.email;
     try{
         const data = await userModel.findOne({email : email});
         

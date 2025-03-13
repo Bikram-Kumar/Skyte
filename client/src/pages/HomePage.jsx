@@ -3,10 +3,12 @@ import Messages from "../components/Messages";
 import { useAuth0 } from '@auth0/auth0-react';
 import { useEffect, useState } from "react";
 import axios from 'axios';
+import { CreateAccountPage } from "./CreateAccountPage";
+import { MainPage } from "./MainPage";
 
 export default function HomePage () {
     const { getAccessTokenSilently, loginWithRedirect, isLoading, user } = useAuth0();
-    
+    const [content, setContent] = useState(<MainPage />);
     useEffect(() => {
         (async () => {
             if (isLoading) return;
@@ -17,10 +19,13 @@ export default function HomePage () {
                     return;
                 }
                 axios.defaults.headers.common['authorization'] = 'Bearer ' + token;
-
-                console.log(await axios.post("http://localhost:3000/api/user/retrieve", {
-                    email: "bikram@gmail.com",
-                }));
+                const userDetails = await axios.get("http://localhost:3000/api/user/retrieve?email=" + user.email);
+                if (userDetails.status == 204) {
+                    // create user
+                    setContent(<CreateAccountPage email={user.email} setContent={setContent} />);
+                } else {
+                    console.log(userDetails);
+                }
                 console.log(user.email);
 
             } catch (err) {
@@ -35,8 +40,7 @@ export default function HomePage () {
 
     return (
         <div className="flex w-full h-screen">
-            <Contacts />
-            <Messages />
+            {content}
         </div>
         
     );
