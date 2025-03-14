@@ -1,4 +1,4 @@
-import Contacts from "../components/Contacts";
+import Contacts from "../components/contacts/Contacts";
 import Messages from "../components/Messages";
 import { useAuth0 } from '@auth0/auth0-react';
 import { useEffect, useState } from "react";
