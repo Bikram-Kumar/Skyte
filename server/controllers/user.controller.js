@@ -46,6 +46,22 @@ export async function retrieveUser(req , res ){
         }
     } catch(error){
         console.log("something went wrong");
+        res.status(500).send();
+    }
+}
+
+
+
+export async function searchUser(req , res ) {
+    const keyword = req.query.keyword;
+    try{
+        const data = await userModel.find({email : {$regex: new RegExp(keyword)}});
+        
+        res.status(200).json(data);
+        
+    } catch(error){
+        console.log("something went wrong");
+        res.status(500).send();
     }
 }
 

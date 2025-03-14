@@ -10,15 +10,18 @@ import {
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { useState } from "react"
-
+import axios from "axios"
 
 export function AddContactPopup() {
 
     const [searchMail, setSearchMail] = useState("");
+    const [searchResult, setSearchResult] = useState([]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        alert(9);
+        const res = await axios.get("http://localhost:3000/api/user/search?keyword=" + searchMail);
+        console.log(res);
+        setSearchResult(res.data);
     }
     return (
         <AlertDialog>
@@ -30,9 +33,9 @@ export function AddContactPopup() {
             <AlertDialogTitle />
             <AlertDialogContent>
                 <form onSubmit={handleSubmit}>
-                    <Input type="email" 
-                        placeholder="Search user email..." 
-                        className="w-5/6 inline rounded-3xl"
+                    <Input type="text" 
+                        placeholder="Find people..." 
+                        className="w-3/4 inline rounded-3xl"
                         value={searchMail}
                         onChange={(e) => {setSearchMail(e.target.value);}}
                     />
@@ -40,12 +43,28 @@ export function AddContactPopup() {
                         <IoMdSearch />
                     </Button>
                 </form>
+                <div className="h-48 overflow-auto">
+                    {searchResult.length ?
+                        searchResult.map((contact, idx) => <ContactTile key={idx} contact={contact} />)
+                        : "No match"}
+                </div>
 
                 <AlertDialogDescription />
-                <AlertDialogCancel variant="destructive" size="icon" className="rounded-full absolute top-1 right-2">
+                <AlertDialogCancel variant="destructive" size="icon" className="rounded-full absolute top-0 right-0">
                         <IoMdClose />
                 </AlertDialogCancel>
             </AlertDialogContent>
         </AlertDialog>
     )
+}
+
+
+
+function ContactTile({contact}) {
+    return (
+        <div className="w-full bg-neutral-200 rounded-md mb-0.5 p-2 flex flex-col">
+            <p className="text-base">{contact.name}</p>
+            <p className="text-xs">{contact.email}</p>
+        </div>
+    );
 }
