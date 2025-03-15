@@ -1,14 +1,21 @@
 import Contacts from "../components/contacts/Contacts";
 import Messages from "../components/Messages";
 import { useAuth0 } from '@auth0/auth0-react';
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import axios from 'axios';
 import { CreateAccountPage } from "./CreateAccountPage";
 import { MainPage } from "./MainPage";
+import { UserContext } from "../lib/contexts";
+
+
 
 export default function HomePage () {
-    const { getAccessTokenSilently, loginWithRedirect, isLoading, user } = useAuth0();
+
+    const [userContext, setUserContext] = useState();
     const [content, setContent] = useState(<MainPage />);
+
+    const { getAccessTokenSilently, loginWithRedirect, isLoading, user } = useAuth0();
+
     useEffect(() => {
         (async () => {
             if (isLoading) return;
@@ -24,7 +31,8 @@ export default function HomePage () {
                     // create user
                     setContent(<CreateAccountPage email={user.email} setContent={setContent} />);
                 } else {
-                    console.log(userDetails);
+                    console.log(userDetails.data);
+                    setUserContext(userDetails.data);
                 }
                 console.log(user.email);
 
@@ -39,9 +47,12 @@ export default function HomePage () {
     }, [getAccessTokenSilently, isLoading]);
 
     return (
-        <div className="flex w-full h-screen">
-            {content}
-        </div>
+        
+        <UserContext.Provider value={[userContext, setUserContext]}>
+            <div className="flex w-full h-screen">
+                {content}
+            </div>
+        </UserContext.Provider>
         
     );
 }

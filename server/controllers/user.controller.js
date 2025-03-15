@@ -54,8 +54,14 @@ export async function retrieveUser(req , res ){
 
 export async function searchUser(req , res ) {
     const keyword = req.query.keyword;
+    const reg = new RegExp(keyword, "i");
     try{
-        const data = await userModel.find({email : {$regex: new RegExp(keyword)}});
+        const data = await userModel.find({
+            $or : [
+                {email : {$regex: reg}},
+                {name : {$regex: reg}}
+            ]
+        });
         
         res.status(200).json(data);
         

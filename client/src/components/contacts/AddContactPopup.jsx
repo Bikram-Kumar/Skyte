@@ -9,19 +9,21 @@ import {
 } from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { useState } from "react"
+import { useContext, useState } from "react"
 import axios from "axios"
+import { UserContext } from "../../lib/contexts"
 
 export function AddContactPopup() {
 
     const [searchMail, setSearchMail] = useState("");
     const [searchResult, setSearchResult] = useState([]);
+    const [userContext, setUserContext] = useContext(UserContext);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         const res = await axios.get("http://localhost:3000/api/user/search?keyword=" + searchMail);
         console.log(res);
-        setSearchResult(res.data);
+        setSearchResult(res.data.filter((contact) => contact.email != userContext.email));
     }
     return (
         <AlertDialog>
@@ -50,8 +52,8 @@ export function AddContactPopup() {
                 </div>
 
                 <AlertDialogDescription />
-                <AlertDialogCancel variant="destructive" size="icon" className="rounded-full absolute top-0 right-0">
-                        <IoMdClose />
+                <AlertDialogCancel className="rounded-full absolute top-0 right-0 shadow-sm size-8">
+                    <IoMdClose />
                 </AlertDialogCancel>
             </AlertDialogContent>
         </AlertDialog>
