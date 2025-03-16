@@ -1,25 +1,35 @@
+import { messageModel } from "../models.js";
+
 export async function createMessage(req , res ){
-    const {sender_id, chatroom_id, message, time , seen_status} = req.body;
+    const {sender, chatId, message} = req.body;
 
     try {
-        await userModel.create({
-            sender_id : sender_id,
-            chatroom_id : chatroom_id,
+        const mess = await messageModel.create({
+            sender : sender,
+            chatroom_id : chatId,
             message : message ,
-            time: time,
-            seen_status: seen_status
+            time: Date.now(),
+            seen_status: 0
         });
-        res.send("message created");
+        res.status(200).json(mess);
     } catch (error) {
-        console.log("Something went wrong");
+        res.status(200).json(error);
     }
 }
 export async function updateMessage(req , res ){
 
 }
-export async function retrieveMessage(req , res ){
 
+
+export async function getChatMessages(req , res){
+    const chatId = req.query.chatId;
+    const data = await messageModel.find({
+        chatroom_id: chatId
+    });
+    res.status(200).json(data);
 }
+
+
 export async function deleteMessage(req , res ){
 
 }
