@@ -39,6 +39,21 @@ export async function retrieveChatroom(req , res ){
 
 }
 
+// returns all chatrooms of user
+export async function getChatList(req , res ){
+	const email = req.query.email;
+	const data = await chatroomModel.find({
+		emails: {$regex: new RegExp(email, "i")}
+	}); 
+	
+	if (data.length) {
+		res.status(200).json(data);
+	} else {
+		res.status(204).send("");
+	}
+
+}
+
 
 
 

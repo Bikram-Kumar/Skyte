@@ -70,7 +70,7 @@ function ContactTile({contact, closeAlertRef}) {
         closeAlertRef.current.click();
         const res = await axios.get(`http://localhost:3000/api/chatroom/retrieve?isDM=true&email1=${appContext.userDetails.email}&email2=${contact.email}`);
         
-        let chatId = res.data.chatId;
+        let chatId = res.data._id;
         if (res.status == 204) {
             // create chatroom
             const chatRes = await axios.post("http://localhost:3000/api/chatroom/create", {
@@ -87,7 +87,7 @@ function ContactTile({contact, closeAlertRef}) {
         });
     };
 
-    
+
     return (
         <div className="w-full bg-neutral-300 rounded-md mb-0.5 p-2 flex flex-col select-none"
             onClick={handleClick}

@@ -2,7 +2,7 @@ import express from "express";
 import { Router } from "express";
 
 import { createUser , updateUser , retrieveUser , deleteUser, searchUser } from "../controllers/user.controller.js";
-import { createChatroom , updateChatroom , deleteChatroom , retrieveChatroom } from "../controllers/chatroom.controller.js";
+import { createChatroom , updateChatroom , deleteChatroom , retrieveChatroom, getChatList } from "../controllers/chatroom.controller.js";
 import { createMessage , updateMessage , deleteMessage , retrieveMessage } from "../controllers/message.controller.js";
 
 export const apiRouter = Router();
@@ -19,6 +19,7 @@ apiRouter.delete("/user/delete", deleteUser);
 apiRouter.post("/chatroom/create", createChatroom);
 apiRouter.put("/chatroom/update", updateChatroom);
 apiRouter.get("/chatroom/retrieve", retrieveChatroom);
+apiRouter.get("/chatroom/getChatList", getChatList);
 apiRouter.delete("/chatroom/delete", deleteChatroom);
 
 

@@ -24,7 +24,7 @@ export default function HomePage () {
                     loginWithRedirect();
                     return;
                 }
-                
+
                 axios.defaults.headers.common['authorization'] = 'Bearer ' + token;
                 const userDetails = await axios.get("http://localhost:3000/api/user/retrieve?email=" + user.email);
                 
@@ -54,7 +54,7 @@ export default function HomePage () {
     return (
         
         <AppContext.Provider value={[appContext, setAppContext]}>
-            <div className="flex w-full h-screen">
+            <div className="flex w-full h-screen select-none">
                 {content}
             </div>
         </AppContext.Provider>
