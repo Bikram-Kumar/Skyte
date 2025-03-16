@@ -16,10 +16,14 @@ const users = [
     "sdjk",
     "sdjk",
 ]
+import { useContext } from "react";
 import { AddContactPopup } from "./AddContactPopup";
+import { AppContext } from "../../lib/contexts";
 
 
 export default function ContactList() {
+    const [appContext, setAppContext] = useContext(AppContext);
+    console.log(appContext);
     return (
         <div className="relative flex flex-col basis-5/12 bg-neutral-300">
             <div className="p-2 bg-sky-400 border-black ring-1">Contacts</div>

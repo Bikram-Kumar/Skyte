@@ -1,17 +1,16 @@
-import Contacts from "../components/contacts/Contacts";
-import Messages from "../components/Messages";
+
 import { useAuth0 } from '@auth0/auth0-react';
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from 'axios';
 import { CreateAccountPage } from "./CreateAccountPage";
 import { MainPage } from "./MainPage";
-import { UserContext } from "../lib/contexts";
+import { AppContext } from "../lib/contexts";
 
 
 
 export default function HomePage () {
 
-    const [userContext, setUserContext] = useState();
+    const [appContext, setAppContext] = useState();
     const [content, setContent] = useState(<MainPage />);
 
     const { getAccessTokenSilently, loginWithRedirect, isLoading, user } = useAuth0();
@@ -25,14 +24,20 @@ export default function HomePage () {
                     loginWithRedirect();
                     return;
                 }
+                
                 axios.defaults.headers.common['authorization'] = 'Bearer ' + token;
                 const userDetails = await axios.get("http://localhost:3000/api/user/retrieve?email=" + user.email);
+                
                 if (userDetails.status == 204) {
                     // create user
                     setContent(<CreateAccountPage email={user.email} setContent={setContent} />);
                 } else {
                     console.log(userDetails.data);
-                    setUserContext(userDetails.data);
+
+                    setAppContext({
+                        ...appContext,
+                        userDetails: userDetails.data
+                    });
                 }
                 console.log(user.email);
 
@@ -48,11 +53,11 @@ export default function HomePage () {
 
     return (
         
-        <UserContext.Provider value={[userContext, setUserContext]}>
+        <AppContext.Provider value={[appContext, setAppContext]}>
             <div className="flex w-full h-screen">
                 {content}
             </div>
-        </UserContext.Provider>
+        </AppContext.Provider>
         
     );
 }

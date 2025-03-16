@@ -10,20 +10,21 @@ const userSchema = new Schema({
     avatar: {type: Buffer}
 });
 
-// each chatroom will contain participant ids
+
 const chatroomSchema = new Schema({
-    participant_ids : {type: String},                   // comma separeted string of hex `ObjectId`s
-    last_message : {type: ObjectId},
-    avatar: {type: Buffer}
+    emails : {type: String, required: true},   // comma separeted string of emails
+    last_message : {type: ObjectId},           // reference to `message`
+    is_dm: {type: Boolean, required: true},    // is direct message or group chat?
+    avatar: {type: Buffer}                     // for groups
 });
 
 
 // each message will store sender and chatroom ids
 const messageSchema = new Schema({
-    sender_id : ObjectId,
-    chatroom_id : ObjectId,
-    message : {type: String},
-    time: {type: Date},
+    sender : {type: String, required: true},
+    chatroom_id : {type: ObjectId, required: true},
+    message : {type: String, required: true},
+    time: {type: Date, required: true},
     seen_status: {type: Number}
 });
 
