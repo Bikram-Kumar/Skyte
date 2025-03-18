@@ -1,17 +1,15 @@
-
 import { useAuth0 } from '@auth0/auth0-react';
 import { useEffect, useState } from "react";
 import axios from 'axios';
 import { CreateAccountPage } from "./CreateAccountPage";
 import { MainPage } from "./MainPage";
 import { AppContext } from "../lib/contexts";
-
-
+import { io } from "socket.io-client"
 
 export default function HomePage () {
 
     const [appContext, setAppContext] = useState();
-    const [content, setContent] = useState(<MainPage />);
+    const [content, setContent] = useState(<div>Loading...</div>);
 
     const { getAccessTokenSilently, loginWithRedirect, isLoading, user } = useAuth0();
 
@@ -32,12 +30,19 @@ export default function HomePage () {
                     // create user
                     setContent(<CreateAccountPage email={user.email} setContent={setContent} />);
                 } else {
+                    // user exists... setup the app
                     console.log(userDetails.data);
-
                     setAppContext({
                         ...appContext,
-                        userDetails: userDetails.data
+                        userDetails: userDetails.data,
+                        socket: io("http://localhost:3000", {
+                            query: {
+                                email: user.email
+                            }
+                        })
                     });
+                    setContent(<MainPage />);
+
                 }
                 console.log(user.email);
 

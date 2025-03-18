@@ -8,14 +8,20 @@ export default function Messages() {
     const [appContext, setAppContext] = useContext(AppContext);
     const [typedText, setTypedText] = useState("");
     const [messageList, setMessageList] = useState([]);
-    if (!appContext) return;
-
+    
     useEffect(() => {
         (async () => {
+            if (!appContext || !appContext.currentChatId) return;
             const res = await axios.get("http://localhost:3000/api/message/getChatMessages?chatId=" + appContext.currentChatId);
-            if (messageList != res.data) setMessageList(res.data);
+        
+            setMessageList(res.data);
+            
+            appContext.socket.on("newMessage", (message) => {
+                if (message.chatroom_id == appContext.currentChatId) setMessageList([...res.data, message]);
+                // alert("new message");
+            })
         })();
-    }, [messageList]);
+    }, [appContext]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -26,13 +32,14 @@ export default function Messages() {
         });
         if (res.status == 200) {
             console.log(res);
+            appContext.socket.emit("newMessage", res.data);
         }
         setTypedText("");
     };
 
     return (
         <div className="flex flex-col basis-7/12 bg-neutral-100">
-            <div className="w-full bg-sky-400 p-2 border-l">{appContext.currentChatId || "Skyte"}</div>
+            <div className="w-full bg-sky-400 p-2 border-l">{(appContext && appContext.currentChatId) || "Skyte"}</div>
             <div className="flex flex-col p-2 bg-emerald-300 h-full overflow-auto">
                 {messageList.map((message, idx) => <MessageBox message={message} key={idx} />)}
             </div>

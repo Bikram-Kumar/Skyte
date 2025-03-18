@@ -7,5 +7,6 @@ export const AppContext = createContext({
         avatar: ""
     },
     currentChatId: "",      // chatroom id of currently opened chat
-    contactDetails: []      // details of user's contacts
+    contactDetails: [],      // details of user's contacts
+    socket: {}              // socket.io connection object
 });
