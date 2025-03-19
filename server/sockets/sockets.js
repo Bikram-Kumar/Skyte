@@ -17,13 +17,17 @@ export function setupSocket() {
         });
 
         socket.on("newMessage", async (message) => {
-            const res = await chatroomModel.findById(message.chatroom_id);
-
-            // notify everyone in the chatroom 
-            for (const email of res.emails.split(",")) {
-                if (connectionIds[email]) {
-                    io.to(connectionIds[email]).emit("newMessage", message);
-                } 
+            try {
+                const res = await chatroomModel.findById(message.chatroom_id);
+    
+                // notify everyone in the chatroom 
+                for (const email of res.emails.split(",")) {
+                    if (connectionIds[email]) {
+                        io.to(connectionIds[email]).emit("newMessage", message);
+                    } 
+                }
+            } catch (e) {
+                console.log(e);
             }
         });
 
