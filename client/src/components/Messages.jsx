@@ -13,7 +13,7 @@ export default function Messages() {
     useEffect(() => {
         (async () => {
             if (!appContext || !appContext.currentChatId) return;
-            const res = await axios.get("http://localhost:3000/api/message/getChatMessages?chatId=" + appContext.currentChatId);
+            const res = await axios.get("/api/message/getChatMessages?chatId=" + appContext.currentChatId);
             setMessageList(res.data); 
         })(); 
     }, [appContext]);
@@ -33,7 +33,7 @@ export default function Messages() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const res = await axios.post("http://localhost:3000/api/message/create", {
+        const res = await axios.post("/api/message/create", {
             sender: appContext.userDetails.email,
             chatId: appContext.currentChatId,
             message: typedText
@@ -47,7 +47,7 @@ export default function Messages() {
 
     return (
         <div className="flex flex-col basis-7/12 bg-neutral-100">
-            <div className="w-full bg-sky-400 p-2 border-l overflow-ellipsis">
+            <div className="w-full bg-sky-400 p-2 border-l overflow-ellipsis font-bold text-white">
                 {(appContext?.currentChatDetails?.name) || "Skyte"}
             </div>
             <div className="flex flex-col p-2 bg-slate-200 h-full overflow-auto">

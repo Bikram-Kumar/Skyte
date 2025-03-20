@@ -15,7 +15,7 @@ export function CreateAccountPage({email, setContent}) {
         <div className="w-full h-full flex justify-center items-center">
             <form onSubmit={async (e) => {
                 e.preventDefault();
-                const res = await axios.post("http://localhost:3000/api/user/create", {
+                const res = await axios.post("/api/user/create", {
                     name: info.name,
                     email: info.email,
                     avatar: info.avatar,

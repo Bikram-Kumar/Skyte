@@ -22,7 +22,7 @@ export function AddContactPopup() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const res = await axios.get("http://localhost:3000/api/user/search?keyword=" + searchMail);
+        const res = await axios.get("/api/user/search?keyword=" + searchMail);
         console.log(res);
         setSearchResult(res.data.filter((contact) => contact.email != appContext.userDetails.email));
     }
@@ -68,16 +68,16 @@ function ContactTile({contact, closeAlertRef}) {
     const [appContext, setAppContext] = useContext(AppContext);
     const handleClick = async (e) => {
         closeAlertRef.current.click();
-        const res = await axios.get(`http://localhost:3000/api/chatroom/retrieve?isDM=true&email1=${appContext.userDetails.email}&email2=${contact.email}`);
+        const res = await axios.get(`/api/chatroom/retrieve?isDM=true&email1=${appContext.userDetails.email}&email2=${contact.email}`);
         
         let chatId = res.data._id;
         if (res.status == 204) {
             // create chatroom
-            const chatRes = await axios.post("http://localhost:3000/api/chatroom/create", {
+            const chatRes = await axios.post("/api/chatroom/create", {
                 emails: [appContext.userDetails.email, contact.email],
                 isDM: true
             });
-            console.log(chatRes);
+            // console.log(chatRes);
             chatId = chatRes.data._id;
         }
         

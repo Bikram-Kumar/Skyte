@@ -22,9 +22,10 @@ export default function HomePage () {
                     loginWithRedirect();
                     return;
                 }
-
+                
+                axios.defaults.baseURL = import.meta.env.VITE_APP_API_ENDPOINT;
                 axios.defaults.headers.common['authorization'] = 'Bearer ' + token;
-                const userDetails = await axios.get("http://localhost:3000/api/user/retrieve?email=" + user.email);
+                const userDetails = await axios.get("/api/user/retrieve?email=" + user.email);
                 
                 if (userDetails.status == 204) {
                     // create user
@@ -35,7 +36,7 @@ export default function HomePage () {
                     setAppContext({
                         ...appContext,
                         userDetails: userDetails.data,
-                        socket: io("http://localhost:3000", {
+                        socket: io(import.meta.env.VITE_APP_API_ENDPOINT, {
                             query: {
                                 email: user.email
                             }

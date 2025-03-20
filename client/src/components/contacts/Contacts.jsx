@@ -11,12 +11,12 @@ export default function ContactList() {
     useEffect(() => {
         (async () => {
             if (!appContext) return;
-            const res = await axios.get("http://localhost:3000/api/chatroom/getChatList?email=" + appContext.userDetails.email);
+            const res = await axios.get("/api/chatroom/getChatList?email=" + appContext.userDetails.email);
             setChatList(res.data);
-            console.log(chatList);
+            // console.log(chatList);
         })();
     }, [appContext]);
-    console.log(appContext);
+    // console.log(appContext);
     
     return (
         <div className="relative flex flex-col basis-5/12 bg-neutral-200">
@@ -52,7 +52,7 @@ function Contact ({chat, isOpen}) {
             if (!chat.is_dm) return;
             for (const email of chat.emails.split(",")) {
                 if (email != appContext.userDetails.email) {
-                    const res = await axios.get("http://localhost:3000/api/user/retrieve?email=" + email);
+                    const res = await axios.get("/api/user/retrieve?email=" + email);
                     setChatDetails(res.data);
                 }
             }
