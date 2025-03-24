@@ -7,7 +7,7 @@ const ObjectId = mongoose.ObjectId;
 const userSchema = new Schema({
     email : {type: String, required: true, unique: true},                             // one email one account
     name : {type: String},
-    avatar: {type: Buffer}
+    avatar: {type: String}
 });
 
 
@@ -15,7 +15,7 @@ const chatroomSchema = new Schema({
     emails : {type: String, required: true},   // comma separeted string of emails
     last_message : {type: ObjectId},           // reference to `message`
     is_dm: {type: Boolean, required: true},    // is direct message or group chat?
-    avatar: {type: Buffer}                     // for groups
+    avatar: {type: String}                     // for groups
 });
 
 

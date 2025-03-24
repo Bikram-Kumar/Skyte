@@ -5,11 +5,12 @@ import { CreateAccountPage } from "./CreateAccountPage";
 import { MainPage } from "./MainPage";
 import { AppContext } from "../lib/contexts";
 import { io } from "socket.io-client"
+import { LoadingSpinner } from '../components/LoadingSpinner';
 
 export default function HomePage () {
 
     const [appContext, setAppContext] = useState();
-    const [content, setContent] = useState(<div>Loading...</div>);
+    const [content, setContent] = useState(<LoadingSpinner />);
 
     const { getAccessTokenSilently, loginWithRedirect, isLoading, user } = useAuth0();
 

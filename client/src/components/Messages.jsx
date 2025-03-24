@@ -2,6 +2,7 @@ import { useContext, useEffect, useState, useRef } from "react";
 import { AppContext } from "../lib/contexts";
 import { IoMdSend } from "react-icons/io"
 import axios from 'axios';
+import avatarIcon from "@/assets/avatar.svg";
 
 
 export default function Messages() {
@@ -19,7 +20,7 @@ export default function Messages() {
     }, [appContext]);
 
     useEffect(() => {
-        appContext.socket.on("newMessage", (message) => {
+        appContext?.socket.on("newMessage", (message) => {
             if (message.chatroom_id == appContext.currentChatId) {
                 setMessageList([...messageList, message]);
             }
@@ -47,8 +48,8 @@ export default function Messages() {
 
     return (
         <div className="flex flex-col basis-7/12 bg-neutral-100">
-            <div className="w-full bg-sky-400 p-2 border-l overflow-ellipsis font-bold text-white">
-                {(appContext?.currentChatDetails?.name) || "Skyte"}
+            <div className="w-full flex flex-row items-center bg-sky-400 p-2 border-l overflow-ellipsis font-bold text-white">
+                <img className="size-8 bg-white mr-2 rounded-full" src={appContext?.currentChatDetails?.avatar || avatarIcon} />
             </div>
             <div className="flex flex-col p-2 bg-slate-200 h-full overflow-auto">
                 {messageList.map((message, idx) => <MessageBox message={message} key={idx} />)}
