@@ -60,7 +60,7 @@ export default function Messages() {
 
             <form className="flex flex-row w-full" onSubmit={handleSubmit}>
                 <textarea className="grow p-2 mr-1 focus:outline-sky-500" 
-                    placeholder="Type your message..."
+                    placeholder="Enter message..."
                     value={typedText}
                     onChange={(e) => {setTypedText(e.target.value)}}
                 />

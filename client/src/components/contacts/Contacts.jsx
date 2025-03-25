@@ -27,7 +27,9 @@ export default function ContactList() {
                 <span className="text-white font-extrabold font-mono space-x-1">
                     Skyte
                 </span>
-                <button onClick={logout} className="hover:opacity-90">
+                <button className="hover:opacity-90"
+                    onClick={() => {logout({logoutParams: {returnTo: window.location.origin}})}} 
+                >
                     <IoMdExit className="size-6 text-white" />
                 </button>
             </div>

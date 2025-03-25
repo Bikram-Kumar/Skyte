@@ -40,8 +40,16 @@ export function DPCropper({imgData, setDPCropperVisible, infoState}){
 
             let mx = ctxOrg.canvas.width / 2, my = ctxOrg.canvas.height / 2;
             let coordX = mx, coordY = my;
+            let isMouseDown = false;
+
+            const onMouseDown = () => {isMouseDown = true;};
+            const onMouseUp = () => {isMouseDown = false;};
+
+            ctxVisible.canvas.addEventListener("mousedown", onMouseDown);
+            ctxVisible.canvas.addEventListener("mouseup", onMouseUp);
+
             ctxVisible.canvas.addEventListener("mousemove", (e) => {
-                if (e.buttons != 1) return;
+                if (!isMouseDown) return;
                 let x = e.offsetX * e.target.width / e.target.clientWidth, y = e.offsetY * e.target.height / e.target.clientHeight;
                 if (x > size / 2 && x < ctxOrg.canvas.width - size / 2) coordX = x;
                 if (y > size / 2 && y < ctxOrg.canvas.height - size / 2) coordY = y;
