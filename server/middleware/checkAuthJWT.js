@@ -7,9 +7,9 @@ export default function checkAuthJWT(req, res, next) {
             audience: 'https://skyte-api',
             issuerBaseURL: process.env.ISSUER_BASE_URL
         });
+        next();
     } catch(e) {
         console.log(e);
         console.log(req);
     }
-    next();
 };
