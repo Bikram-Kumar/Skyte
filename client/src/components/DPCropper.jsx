@@ -45,10 +45,14 @@ export function DPCropper({imgData, setDPCropperVisible, infoState}){
             const onMouseDown = () => {isMouseDown = true;};
             const onMouseUp = () => {isMouseDown = false;};
 
-            ctxVisible.canvas.addEventListener("mousedown", onMouseDown);
-            ctxVisible.canvas.addEventListener("mouseup", onMouseUp);
+            ctxVisible.canvas.addEventListener("touchdown", (e) =>{e.preventDefault();} );
+            ctxVisible.canvas.addEventListener("touchmove", (e) =>{e.preventDefault();} );
+            ctxVisible.canvas.addEventListener("touchup", (e) =>{e.preventDefault();} );
+            ctxVisible.canvas.addEventListener("pointerdown", onMouseDown);
+            ctxVisible.canvas.addEventListener("pointerup", onMouseUp);
 
-            ctxVisible.canvas.addEventListener("mousemove", (e) => {
+            ctxVisible.canvas.addEventListener("pointermove", (e) => {
+                e.preventDefault();
                 if (!isMouseDown) return;
                 let x = e.offsetX * e.target.width / e.target.clientWidth, y = e.offsetY * e.target.height / e.target.clientHeight;
                 if (x > size / 2 && x < ctxOrg.canvas.width - size / 2) coordX = x;
@@ -71,7 +75,7 @@ export function DPCropper({imgData, setDPCropperVisible, infoState}){
     }, [imgData]);
     
     return (
-        <div className="w-full h-full flex items-center justify-center  ">
+        <div className="w-full h-full flex items-center justify-center">
             <canvas className="bg-black bg-opacity-50 w-full h-full object-contain" ref={cnvsRef}></canvas>
             <IoMdClose className="absolute top-2 left-2 size-8 text-neutral-400 hover:opacity-90"
                 onClick={() => {setDPCropperVisible(false)}}
