@@ -2,13 +2,17 @@ import axios from "axios";
 import { useRef, useState } from "react";
 import { MainPage } from "./MainPage";
 import { DPCropper } from "../components/DPCropper";
+import avatarIcon from "@/assets/avatar.svg";
+import { IoMdCreate } from "react-icons/io";
+
 
 export function CreateAccountPage({email, setContent}) {
     const [info, setInfo] = useState({
         name: "",
         email: email,
-        avatar: "https://www.google.com/logos/doodles/2025/indian-premier-league-2025-begins-6753651837110716-sdrk.png"
+        avatar: ""
     });
+    console.log(info);
 
     const [dpCropperVisible, setDPCropperVisible] = useState(false);
     const [selectedImg, setSelectedImg] = useState("");
@@ -58,7 +62,7 @@ export function CreateAccountPage({email, setContent}) {
         <div className="w-full h-full flex flex-col items-center bg-sky-400">
             
             {dpCropperVisible && 
-                (<div className="absolute w-full h-full bg-black bg-opacity-50">
+                (<div className="absolute z-50 w-full h-full bg-black bg-opacity-50">
                     <DPCropper imgData={selectedImg} setDPCropperVisible={setDPCropperVisible} infoState={[info,setInfo]} />
                 </div>)
             }
@@ -73,10 +77,15 @@ export function CreateAccountPage({email, setContent}) {
             <form className="flex flex-col items-center w-full p-4" 
                 onSubmit={handleSubmit}>
                 
-                <img ref={dpImgRef} className="size-24 rounded-full bg-white shadow-md shadow-slate-900"
-                    onClick={pickImage}
-                    src={info.avatar}  />
+                <div onClick={pickImage} className="relative">
+                    <img ref={dpImgRef} className="size-24 rounded-full bg-white shadow-md shadow-slate-900"
+                        src={info.avatar || avatarIcon}  
+                    />
+                    <IoMdCreate className="absolute top-0 right-0 p-2 size-8 bg-neutral-300 rounded-full"/>
+                </div>
+
                 <div className="text-white text-lg font-bold p-2">Profile Picture</div>
+
                 <input ref={dpPickerRef} type="file" accept="image/*" name="avatar" hidden onChange={changeDP} />
 
                 <br />
