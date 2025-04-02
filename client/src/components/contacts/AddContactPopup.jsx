@@ -12,6 +12,7 @@ import { Input } from "@/components/ui/input"
 import { useContext, useRef, useState } from "react"
 import axios from "axios"
 import { AppContext } from "../../lib/contexts"
+import avatarLogo from "@/assets/avatar.svg";
 
 export function AddContactPopup() {
 
@@ -23,7 +24,7 @@ export function AddContactPopup() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const res = await axios.get("/api/user/search?keyword=" + searchMail);
-        console.log(res);
+        // console.log(res);
         setSearchResult(res.data.filter((contact) => contact.email != appContext.userDetails.email));
     }
 
@@ -77,23 +78,28 @@ function ContactTile({contact, closeAlertRef}) {
                 emails: [appContext.userDetails.email, contact.email],
                 isDM: true
             });
-            // console.log(chatRes);
             chatId = chatRes.data._id;
         }
+
+        let chatDetails = await axios.get("/api/user/retrieve?email=" + contact.email);
         
         setAppContext({
             ...appContext,
-            currentChatId: chatId
+            currentChatId: chatId,
+            currentChatDetails: chatDetails.data
         });
     };
 
 
     return (
-        <div className="w-full bg-neutral-300 rounded-md mb-0.5 p-2 flex flex-col select-none"
-            onClick={handleClick}
-        >
-            <p className="text-base">{contact.name}</p>
-            <p className="text-xs">{contact.email}</p>
+        <div className="w-full rounded-md mb-0.5 p-2 flex flex-row hover:bg-neutral-200" onClick={handleClick}>
+
+            <img className="size-10 rounded-full mr-3" src={contact.avatar || avatarLogo} alt="img" />
+
+            <div className="flex flex-col">
+                <p className="text-base">{contact.name}</p>
+                <p className="text-xs">{contact.email}</p>
+            </div>
         </div>
     );
 }

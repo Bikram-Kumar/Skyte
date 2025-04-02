@@ -3,6 +3,7 @@ import { AddContactPopup } from "./AddContactPopup";
 import { AppContext } from "../../lib/contexts";
 import axios from "axios";
 import { IoMdExit } from "react-icons/io";
+import { LiaComments } from "react-icons/lia";
 import { useAuth0 } from "@auth0/auth0-react";
 import avatarIcon from "@/assets/avatar.svg";
 
@@ -22,10 +23,10 @@ export default function ContactList() {
     // console.log(appContext);
     
     return (
-        <div className="relative flex flex-col basis-5/12 bg-neutral-200">
-            <div className="flex flex-row justify-between p-3 bg-sky-400 border-black ring-1">
-                <span className="text-white font-extrabold font-mono space-x-1">
-                    Skyte
+        <div className="relative flex flex-col basis-5/12 bg-slate-100">
+            <div className="flex flex-row justify-between p-2.5 bg-sky-400 border-black ring-1">
+                <span className="text-white font-bold tracking-wide text-lg">
+                    SKYTE
                 </span>
                 <button className="hover:opacity-90"
                     onClick={() => {logout({logoutParams: {returnTo: window.location.origin}})}} 
@@ -35,7 +36,12 @@ export default function ContactList() {
             </div>
             <div className="flex flex-col h-full overflow-auto">
                 {chatList.length ? chatList.map((chat, idx) => <Contact chat={chat} isOpen={chat._id == appContext.currentChatId} key={idx} />)
-                : "Start some chat"}
+                : (
+                <div className="flex flex-col w-full h-full justify-center items-center">
+                    <LiaComments className="size-8" />
+                    Start a conversation
+                </div>
+                )}
             </div>
             
             <AddContactPopup />
@@ -67,7 +73,7 @@ function Contact ({chat, isOpen}) {
         })();
     },[]);
     return (
-        <div className={`w-full flex flex-row items-center ${isOpen ? "bg-sky-200" : "bg-neutral-100"} rounded-md mb-0.5 p-2`}
+        <div className={`w-full flex flex-row items-center ${isOpen ? "bg-sky-300" : "bg-neutral-100"} mb-0.5 p-3`}
             onClick={handleClick}
         >
             <img className="size-8 bg-white mr-2 rounded-full" src={chatDetails?.avatar || avatarIcon}/>

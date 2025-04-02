@@ -33,7 +33,7 @@ export default function HomePage () {
                     setContent(<CreateAccountPage email={user.email} setContent={setContent} />);
                 } else {
                     // user exists... setup the app
-                    console.log(userDetails.data);
+                    // console.log(userDetails.data);
                     setAppContext({
                         ...appContext,
                         userDetails: userDetails.data,
@@ -46,7 +46,7 @@ export default function HomePage () {
                     setContent(<MainPage />);
 
                 }
-                console.log(user.email);
+                // console.log(user.email);
 
             } catch (err) {
                 if (err.error == "login_required") {

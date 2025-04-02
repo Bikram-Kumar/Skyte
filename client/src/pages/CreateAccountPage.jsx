@@ -12,7 +12,6 @@ export function CreateAccountPage({email, setContent}) {
         email: email,
         avatar: ""
     });
-    console.log(info);
 
     const [dpCropperVisible, setDPCropperVisible] = useState(false);
     const [selectedImg, setSelectedImg] = useState("");
@@ -36,7 +35,7 @@ export function CreateAccountPage({email, setContent}) {
         } else {
             alert("Some error occured. Please try later")
         }
-        console.log(res);
+        // console.log(res);
     };
 
     const pickImage = (e) => {
@@ -46,7 +45,6 @@ export function CreateAccountPage({email, setContent}) {
 
 
     const changeDP = () => {
-        console.log(dpPickerRef.current);
 
         if (dpPickerRef.current?.files && dpPickerRef.current?.files[0]) {
             const reader = new FileReader();
