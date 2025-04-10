@@ -48,7 +48,7 @@ export default function Messages() {
     };
 
     return (
-        <div className="flex flex-col basis-7/12 bg-slate-100">
+        <div className="flex flex-col basis-7/12 bg-neutral-200">
 
         { (appContext?.currentChatId) ? (
             <>
@@ -99,7 +99,7 @@ function MessageBox({message}) {
     const [appContext, setAppContext] = useContext(AppContext);
     const isMine = (message.sender == appContext.userDetails.email);
     return (
-        <div className={`w-fit max-w-96 mb-2 rounded-xl p-2 ${isMine ? "bg-sky-500 text-white self-end" : "bg-neutral-100 text-black"}`}>
+        <div className={`w-fit max-w-96 mb-2 rounded-xl p-2 ${isMine ? "bg-sky-500 text-white self-end" : "bg-white text-black"}`}>
             {message.message}
         </div>
     );

@@ -61,7 +61,7 @@ export default function HomePage () {
     return (
         
         <AppContext.Provider value={[appContext, setAppContext]}>
-            <div className="flex w-full h-screen select-none font-sans">
+            <div className="flex w-full h-svh select-none font-sans">
                 {content}
             </div>
         </AppContext.Provider>
